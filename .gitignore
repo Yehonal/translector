@@ -5,24 +5,7 @@
 # NOTE: Insert your custom rules at the end of this file
 #
 
-!.gitignore
-
-# dependencies
-node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
-# production
-/build
-
-# misc
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+!.git*
 
 #
 # OS specific
@@ -69,6 +52,7 @@ nbproject/private/
 *.pydevproject
 .metadata
 .gradle
+tmp/
 *.tmp
 *.swp
 *~.nib
@@ -78,10 +62,8 @@ local.properties
 
 # External tool builders
 .externalToolBuilders/
+/node_modules
 /npm-debug.*
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
 # Locally stored "Eclipse launch configurations"
 *.launch
@@ -95,8 +77,19 @@ yarn-error.log*
 # TeXlipse plugin
 .texlipse
 
+# Nodejs
+.env
+
+
 #
-# This project
+# custom
 #
 
-/src/conf/conf.js
+/modules/*
+!/modules/.gitkeep
+
+conf/*
+!conf/*.dist.js
+
+/srv/upload/*/*
+!/srv/upload/.gitkeep

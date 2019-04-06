@@ -4,14 +4,14 @@
         "allowSyntheticDefaultImports": true,
         "baseUrl": ".",
         "paths": {
-            "@this/src/*": ["./src/*"],
-            "@this/conf/*": ["./src/conf/*"],
-            "@hw-core/*": ["./src/deps/hw-core/*"],
+            "@this/*": ["./*"],
+            "@hw-core/*": ["./deps/@hw-core/*"],
         },
+        "module": "commonjs"
     },
-    "exclude": [
+    "exclude": [    
         "node_modules",
         "**/node_modules/*",
-        "dist"
+         "dist"
     ]
 }
