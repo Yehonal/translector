@@ -47,28 +47,7 @@ class App extends React.Component {
       <AppContext>
         {appCtx =>
           <Router>
-            <Navbar color="light" light expand="md">
-              <NavbarBrand href={conf.basePath}>HW Universal PWA</NavbarBrand>
-              <NavbarToggler onClick={this.toggle} aria-label="navbar-toggler" />
-              <Collapse isOpen={this.state.isOpen} navbar>
-
-                <Nav navbar>
-                  <NavItem>
-                    <NavLink to="/" tag={Link}><FontAwesomeIcon icon="home" /> Home</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink to="/blog/" tag={Link}><FontAwesomeIcon icon="rss-square" /> Blog</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink to="/app/" tag={Link}>Admin</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink href="https://github.com/HW-Core/universal-pwa">Repository <FontAwesomeIcon icon="external-link-alt" /></NavLink>
-                  </NavItem>
-                </Nav>
-              </Collapse>
-              <div style={{ float: "right" }}>User: {appCtx.state.user.name}</div>
-            </Navbar>
+            
           </Router>
         }
       </AppContext>
