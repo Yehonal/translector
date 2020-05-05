@@ -19,13 +19,13 @@ const ListFilter = ({ fields, info, type, ...props }) => {
         let v = fields[n];
 
         let opt = {};
-        let modelOpt = {};
+        //let modelOpt = {};
 
         if (infoData) {
             if (infoData.api && infoData.api["fetch"] && infoData.api["fetch"].fields && infoData.api["fetch"].fields[v.name])
                 opt = infoData.api["fetch"].fields[v.name];
-            if (infoData.modelInfo)
-                modelOpt = infoData.modelInfo.fields[v.name];
+            //if (infoData.modelInfo)
+            //    modelOpt = infoData.modelInfo.fields[v.name];
         }
 
         if (v.type instanceof GraphQLScalarType) {

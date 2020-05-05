@@ -9,7 +9,7 @@ export const CustomShow = ({ type, introspectionResults, info, parentProps }) =>
 
     let fields = introspectionResults._typeMap[type]._fields;
 
-    const { jsxFields, jsxFieldsExpand } = buildFields(type, fields, info)
+    const { jsxFieldsExpand } = buildFields(type, fields, info)
 
     return (
         <Show {...parentProps}>

@@ -7,7 +7,7 @@ import {
 } from "react-admin"
 import RichTextInput from 'ra-input-rich-text';
 import { GraphQLScalarType, GraphQLEnumType, GraphQLNonNull, GraphQLInputObjectType } from "graphql"
-import { ManyRefInputField, RefField } from "../components/Fields"
+import { ManyRefInputField } from "../components/Fields"
 import { parseData } from "@hw-core/js-common/json"
 
 export default (type, action, fields, info) => {
