@@ -1,6 +1,7 @@
 import path from 'path'
 import electron, { ipcMain as ipc, app, BrowserWindow } from 'electron';
 import windowStateKeeper from 'electron-window-state';
+import settings from "electron-settings";
 
 const rootPath = path.resolve(path.join(__dirname, "/../../"));
 const icon = path.join(rootPath, "public/android-chrome-512x512.png");
@@ -12,9 +13,11 @@ class Service {
         query,
         langs,
         srcLang,
-        dstLang
+        dstLang,
+        enabled,
     }) {
         this.prefix = prefix;
+        /** @type {string} */
         this.name = name;
         /** @type {BrowserWindow} */
         this.handler = null;
@@ -23,6 +26,17 @@ class Service {
         this.srcLang = srcLang;
         this.dstLang = dstLang;
         this.text = "";
+        this.enabled = enabled;
+    }
+
+    disable() {
+        this.enabled = false;
+        this.handler.hide()
+    }
+
+    enable() {
+        this.enabled = true;
+        this.handler.show();
     }
 
     setHandler(handler) {
@@ -41,14 +55,15 @@ class Service {
         }
     }
 
-    findText(text) {
-        this.handler.loadURL(this.getUrl(text));
+    findText(text, reverse = false) {
+        if (!this.enabled) return;
+        this.handler.loadURL(this.getUrl(text, reverse));
     }
 
-    getUrl(text) {
+    getUrl(text, reverse = false) {
         this.text = text;
 
-        return this.prefix + this.query(this.srcLang, this.dstLang, text);
+        return this.prefix + this.query(!reverse ? this.srcLang : this.dstLang, !reverse ? this.dstLang : this.srcLang, text);
     }
 }
 
@@ -57,6 +72,18 @@ const TYPES = {
         name: "google",
         prefix: "https://translate.google.it/?",
         query: (src, dst, text) => `sl=${src}&tl=${dst}&text=${text}`,
+        srcLang: "it",
+        dstLang: "en",
+        langs: {
+            en: "en",
+            it: "it",
+            es: "es"
+        }
+    }),
+    DEEPL: new Service({
+        name: "deepl",
+        prefix: "https://www.deepl.com/translator#",
+        query: (src, dst, text) => `${src}/${dst}/${text}`,
         srcLang: "it",
         dstLang: "en",
         langs: {
@@ -103,11 +130,18 @@ function createMainWindow(name) {
     var mainWindow = new BrowserWindow({
         'x': mainWindowState.x,
         'y': mainWindowState.y,
-        'width': 400,
-        'height': 150,
+        'width': 640,
+        'height': 480,
         //resizable: false,
+        webPreferences: {
+            nodeIntegration: true
+        },
         icon
     });
+
+    mainWindow.setAlwaysOnTop(true, 'screen');
+
+    //mainWindow.webContents.openDevTools();
 
     mainWindow.loadURL("file://" + path.join(rootPath, "public/toolbar.html"))
 
@@ -118,7 +152,7 @@ function createMainWindow(name) {
     // and restore the maximized or full screen state
     mainWindowState.manage(mainWindow);
 
-        // Emitted when the window is closed.
+    // Emitted when the window is closed.
     mainWindow.on('closed', function () {
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
@@ -140,6 +174,9 @@ function createTWindow(parent, type) {
         defaultWidth: 800,
         defaultHeight: 600,
         file: type.name + ".json",
+        webPreferences: {
+            nodeIntegration: true
+        }
     });
 
     // Create the browser window.
@@ -159,7 +196,14 @@ function createTWindow(parent, type) {
     mainWindowState.manage(type.handler);
 
     //console.log(type.prefix)
-    type.handler.loadURL(type.prefix);
+    const curLangs = settings.get("currentLangs")
+    type.setLang(curLangs.src || "en", curLangs.dst || "es", true)
+
+    const enabledServices = settings.get("enabledServices") || {};
+    const isEnabled = enabledServices ? enabledServices[type.name.toUpperCase()] : true
+
+    type[isEnabled ? "enable" : "disable"]()
+
 
     //type.handler.setMenu(null);
 
@@ -190,8 +234,17 @@ ipc.on('setLang', (event, message) => {
     }
 
     TYPES.GOOGLE.setLang(src, dst, true)
+    TYPES.DEEPL.setLang(src, dst, true)
     TYPES.WORDREF.setLang(src, dst, true)
     TYPES.TLDICTIONARY.setLang(src, dst, true)
+})
+
+ipc.on('setService', (event, message) => {
+    var opt = JSON.parse(message);
+    let id = opt.id;
+    let enabled = opt.enabled;
+
+    TYPES[id][enabled ? "enable" : "disable"]();
 })
 
 // This method will be called when Electron has finished
@@ -202,13 +255,23 @@ app.on('ready', () => {
     var main = createMainWindow("main")
     createTWindow(null, TYPES.GOOGLE)
     createTWindow(null, TYPES.WORDREF)
+    createTWindow(null, TYPES.DEEPL)
     createTWindow(null, TYPES.TLDICTIONARY)
 
     electron.globalShortcut.register('CommandOrControl+T', () => {
         let currentClipboard = electron.clipboard.readText();
         TYPES.GOOGLE.findText(currentClipboard);
+        TYPES.DEEPL.findText(currentClipboard);
         TYPES.WORDREF.findText(currentClipboard);
         TYPES.TLDICTIONARY.findText(currentClipboard);
+    })
+
+    electron.globalShortcut.register('CommandOrControl+R', () => {
+        let currentClipboard = electron.clipboard.readText();
+        TYPES.GOOGLE.findText(currentClipboard, true);
+        TYPES.DEEPL.findText(currentClipboard, true);
+        TYPES.WORDREF.findText(currentClipboard, true);
+        TYPES.TLDICTIONARY.findText(currentClipboard, true);
     })
 });
 

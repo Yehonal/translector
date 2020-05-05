@@ -4,7 +4,7 @@ import { GraphQLList } from "graphql"
 import { Route } from 'react-router';
 import PostIcon from '@material-ui/icons/Book';
 import Voyager from "./views/Voyager"
-import { introspectionQuery as rawIntrospectionQuery, buildClientSchema } from 'graphql/utilities';
+import { getIntrospectionQuery as rawIntrospectionQuery, buildClientSchema } from 'graphql/utilities';
 import { Admin, Resource } from 'react-admin';
 import gql from "graphql-tag"
 import { CustomShow, CustomEdit, CustomCreate } from "./views/Single"
@@ -28,7 +28,7 @@ export default class Dashboard extends Component {
 
     async componentDidMount() {
         let client = this.client;
-        const introspectionQuery = gql(rawIntrospectionQuery);
+        const introspectionQuery = gql(rawIntrospectionQuery());
 
         const getSchema = async (client) => {
             const { data } = await client.query({ query: introspectionQuery });

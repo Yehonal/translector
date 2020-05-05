@@ -3,46 +3,119 @@
 <head>
     <link href="./bootstrap.min.css" rel="stylesheet">
     <script>
-        const {
+        var {
             ipcRenderer
         } = require('electron')
 
-        function setLang(type, lang) {
-            ipcRenderer.send("setLang", JSON.stringify({
-                type,
-                lang
-            }));
-        }
+        var settings = require('electron-settings');
 
+        var langOptions = settings.get("currentLangs") || { src: "en", dst: "it" };
+        var enabledServices = settings.get("enabledServices") || {
+            GOOGLE: true,
+            DEEPL: true,
+            TLDICTIONARY: true,
+            WORDREF: false
+        };
     </script>
 </head>
 
 <body>
     <div class="container">
         <form>
-
+            <span>
+                How to translate:
+                <p>
+                    <ol>
+                        <li>Select a word or a sentence and Press CTRL+C</li>
+                        <li>Press CTLR+T to translate from <b>Source</b> to <b>Target</b> or CTLR+R to translate from
+                            <b>Target</b> to <b>Source</b></li>
+                    </ol>
+                </p>
+            </span>
             <div class="form-group">
                 <div class="row">
                     <div class="col">
                         <label for="src">Source</label>
-                        <select class="form-control" name="src" id="src" onchange="setLang('src',this.value)">
-                            <option value="en" selected="selected">English</option>
+                        <select class="form-control" name="src" id="lang-src" onchange="setLang('src',this.value)">
+                            <option value="en">English</option>
                             <option value="it">Italiano</option>
                             <option value="es">Español</option>
                         </select>
                     </div>
                     <div class="col">
                         <label for="src">Target</label>
-                        <select class="form-control" name="dst" id="dst" onchange="setLang('dst',this.value)">
+                        <select class="form-control" name="dst" id="lang-dst" onchange="setLang('dst',this.value)">
                             <option value="en">English</option>
-                            <option value="it" selected="selected">Italiano</option>
+                            <option value="it">Italiano</option>
                             <option value="es">Español</option>
                         </select>
                     </div>
                 </div>
             </div>
+            <div class="form-group">
+                <div class="row">
+                    <span>Enable translation services:</span>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="GOOGLE"
+                                onchange="setService('GOOGLE',event)">
+                            <label class="form-check-label" for="GOOGLE">Google Translator</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="DEEPL"
+                                onchange="setService('DEEPL',event)">
+                            <label class="form-check-label" for="DEEPL">Deepl</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="TLDICTIONARY"
+                                onchange="setService('TLDICTIONARY',event)">
+                            <label class="form-check-label" for="TLDICTIONARY">Translector Dictionary</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="WORDREF"
+                                onchange="setService('WORDREF',event)">
+                            <label class="form-check-label" for="WORDREF">Word Reference</label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </form>
     </div>
+    <script>
+        const srcElement = document.getElementById('lang-src');
+        const dstElement = document.getElementById('lang-dst');
+        srcElement.value = langOptions && langOptions.src ? langOptions.src : "en";
+        dstElement.value = langOptions && langOptions.dst ? langOptions.dst : "es";
+
+        function checkService(id) {
+            const svc = document.getElementById(id);
+            svc.checked = window.enabledServices[id]
+        }
+
+        checkService("GOOGLE")
+        checkService("DEEPL")
+        checkService("WORDREF")
+        checkService("TLDICTIONARY")
+
+        function setService(id, event) {
+            let enabled = event.target.checked;
+            console.log(id, enabled)
+            window.enabledServices[id] = enabled;
+            window.settings.set("enabledServices", window.enabledServices);
+            window.ipcRenderer.send("setService", JSON.stringify({ id, enabled }));
+        }
+
+        function setLang(type, lang) {
+            window.langOptions[type] = lang;
+
+            window.settings.set("currentLangs", window.langOptions);
+
+            window.ipcRenderer.send("setLang", JSON.stringify({ type, lang }));
+        }
+    </script>
 </body>
 
 </html>

@@ -57,7 +57,7 @@ ManyRefField.propTypes = {
     source: PropTypes.string.isRequired,
 };
 
-const ManyRefInputField = ({ source, record = {}, children, info, ...props, }) => {
+const ManyRefInputField = ({ source, record = {}, children, info, ...props }) => {
     let singular = pluralize.singular(source);
     let lSingular = singular.charAt(0).toLowerCase() + singular.slice(1);
     let infoKey = lSingular + "Default";
@@ -108,7 +108,7 @@ RefField.propTypes = {
     source: PropTypes.string.isRequired,
 };
 
-const RefInputField = ({ source, record = {}, children, info, ...props, }) => {
+const RefInputField = ({ source, record = {}, children, info, ...props }) => {
     let singular = pluralize.singular(source);
     let lSingular = singular.charAt(0).toLowerCase() + singular.slice(1);
     let infoKey = lSingular + "Default";

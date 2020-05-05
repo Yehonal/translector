@@ -80,16 +80,16 @@ local.properties
 # Nodejs
 .env
 
+node_modules
 
 #
 # custom
 #
 
+build
+
 /modules/*
 !/modules/.gitkeep
-
-conf/*
-!conf/*.dist.js
 
 /srv/upload/*/*
 !/srv/upload/.gitkeep
