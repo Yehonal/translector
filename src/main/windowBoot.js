@@ -196,8 +196,8 @@ function createTWindow(parent, type) {
     mainWindowState.manage(type.handler);
 
     //console.log(type.prefix)
-    const curLangs = settings.get("currentLangs")
-    type.setLang(curLangs.src || "en", curLangs.dst || "es", true)
+    const curLangs = settings.get("currentLangs") || { src : "en" , dst : "es"}
+    type.setLang(curLangs.src, curLangs.dst, true)
 
     const enabledServices = settings.get("enabledServices") || {};
     const isEnabled = enabledServices ? enabledServices[type.name.toUpperCase()] : true
