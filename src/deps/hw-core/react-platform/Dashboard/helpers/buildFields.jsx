@@ -1,6 +1,6 @@
 import React from 'react';
 import pluralize from 'pluralize';
-import { FunctionField, ImageField, SelectField, NumberField, DateField, RichTextField, BooleanField, TextField } from "react-admin"
+import { FunctionField, SelectField, NumberField, DateField, RichTextField, BooleanField } from "react-admin"
 import { GraphQLScalarType, GraphQLEnumType } from "graphql"
 import { ManyRefField, RefField } from "../components/Fields"
 import { parseData } from "@hw-core/js-common/json"
@@ -23,6 +23,7 @@ export default (type, fields, info) => {
         let v = fields[n];
 
         let opt = {};
+        // eslint-disable-next-line
         let modelOpt = {};
 
         if (infoData) {

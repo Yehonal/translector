@@ -231,12 +231,12 @@ export default (introspectionResults, infoData) => (raFetchType, resourceName, p
 
             Object.keys(params.data).forEach((v, k) => {
 
-                let opt = {}, modelOpt = {};
+                let opt = {};
 
                 if (resInfo.api) {
                     let queryInfo = resInfo.api[raFetchType.toLowerCase()];
                     opt = queryInfo && queryInfo.fields && queryInfo.fields[v];
-                    modelOpt = resInfo.modelInfo && resInfo.modelInfo.fields[v];
+                   // modelOpt = resInfo.modelInfo && resInfo.modelInfo.fields[v];
                 }
 
                 let value = params.data[v];

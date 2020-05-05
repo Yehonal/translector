@@ -1,17 +1,9 @@
 import React from 'react';
 import pluralize from 'pluralize';
 import {
-    FunctionField, SelectInput, ImageField, ImageInput, NumberInput, DateInput, BooleanInput, TextInput,
-    AutocompleteInput, AutocompleteArrayInput, ReferenceInput, ReferenceArrayInput, SelectArrayInput,
-    required,
-    minLength,
-    maxLength,
-    minValue,
-    maxValue,
-    number,
-    regex,
-    email,
-    choices
+    SelectInput, ImageField, ImageInput, NumberInput, DateInput, BooleanInput, TextInput,
+    ReferenceInput,
+    required
 } from "react-admin"
 import RichTextInput from 'ra-input-rich-text';
 import { GraphQLScalarType, GraphQLEnumType, GraphQLNonNull, GraphQLInputObjectType } from "graphql"

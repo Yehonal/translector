@@ -1,10 +1,9 @@
 import React from "react"
 import {
     Show, SimpleShowLayout,
-    Filter, TextInput, SelectInput, SelectArrayInput, NumberInput, DateInput, BooleanInput, EditButton,
+    Filter, TextInput, SelectArrayInput, NumberInput, DateInput, BooleanInput, EditButton,
     List, Datagrid,
 } from 'react-admin';
-import { CustomShow } from "./Single"
 import { GraphQLScalarType, GraphQLEnumType } from "graphql"
 import pluralize from 'pluralize';
 import { parseData } from "@hw-core/js-common/json"
