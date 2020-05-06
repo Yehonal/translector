@@ -33,7 +33,7 @@
     "tslint": "^6.1.2"
   },
   "scripts": {
-    "version": "npm version --from-git --tags -m \"v%s\"",
+    "version": "npm version --from-git --tags -m \"v%s\" && git push && git push --tags",
     "version-patch": "npm run version -- patch",
     "start:electron": "electron .",
     "start:server": "node --preserve-symlinks ./src/server/boot.js",
@@ -70,7 +70,8 @@
     },
     "files": [
       "build/**/*",
-      "src/main/**/*"
+      "src/main/**/*",
+      "src/server/**/*"
     ],
     "directories": {
       "buildResources": "build"
