@@ -33,8 +33,8 @@
     "tslint": "^6.1.2"
   },
   "scripts": {
-    "version": "npm version --from-git --tags -m \"v%s\" && git push && git push --tags",
-    "version-patch": "npm run version -- patch",
+    "version": "npm version --from-git --tags -m \"v%s\"",
+    "version-patch": "npm run version -- patch && git push && git push --tags",
     "start:electron": "electron .",
     "start:server": "node --preserve-symlinks ./src/server/boot.js",
     "start": "craco start --config cra-config.js",
