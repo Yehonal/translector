@@ -50,6 +50,27 @@
     "asar": false,
     "win": {
       "icon": "build/icon.ico"
+    },
+    "mac": {
+      "icon": "build/icon.ico",
+      "category": "public.app-category.games",
+      "target": "dmg"
+    },
+    "linux": {
+      "icon": "build/icon.ico",
+      "executableName": "as-launcher",
+      "category": "Game",
+      "target": "AppImage"
+    },
+    "files": [
+      "build/**/*",
+      "src/main/**/*"
+    ],
+    "directories": {
+      "buildResources": "build"
+    },
+    "extraMetadata": {
+      "main": "src/main/index.js"
     }
   },
   "eslintConfig": {
