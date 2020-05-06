@@ -2,7 +2,7 @@
   "name": "translector",
   "productName": "Translector",
   "description": "A powerful utility for Translators",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "private": true,
   "author": "hyperweb2",
   "homepage": ".",
@@ -29,8 +29,8 @@
     "tslint": "^6.1.2"
   },
   "scripts": {
-    "version" : "npm version --from-git --tags -m \"v%s\"",
-    "version-patch" : "npm run version -- patch",
+    "version": "npm version --from-git --tags -m \"v%s\"",
+    "version-patch": "npm run version -- patch",
     "start:electron": "electron .",
     "start:server": "node --preserve-symlinks ./src/server/boot.js",
     "start": "craco start --config cra-config.js",
