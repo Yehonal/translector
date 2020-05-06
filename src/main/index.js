@@ -6,12 +6,12 @@
 
 const path = require("path")
 
-const rootPath=path.resolve(path.join(__dirname, "../../"));
+const rootPath = path.resolve(path.join(__dirname, "../../"));
 
 require("@hw-core/node-platform/src/server/boot")({
     root: rootPath,
     extends: path.join(rootPath, '.babelrc'),
-    ignore: [/node_modules/],
+    ignore: [/node_modules\/(?!@hw-core).*/],
     only: [rootPath],
 })
 

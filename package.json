@@ -55,15 +55,15 @@
     "productName": "Translector",
     "asar": false,
     "win": {
-      "icon": "build/icon.ico"
+      "icon": "build/android-chrome-512x512.png"
     },
     "mac": {
-      "icon": "build/icon.ico",
+      "icon": "build/android-chrome-512x512.png",
       "category": "public.app-category.games",
       "target": "dmg"
     },
     "linux": {
-      "icon": "build/icon.ico",
+      "icon": "build/android-chrome-512x512.png",
       "executableName": "as-launcher",
       "category": "Game",
       "target": "AppImage"
@@ -71,7 +71,11 @@
     "files": [
       "build/**/*",
       "src/main/**/*",
-      "src/server/**/*"
+      "src/server/**/*",
+      "public/**/*",
+      "conf/**/*",
+      "package.json",
+      ".babelrc"
     ],
     "directories": {
       "buildResources": "build"

@@ -1,4 +1,4 @@
-import conf from "@root/conf/conf"
+import conf from "../../conf/conf"
 
 import {
     Server

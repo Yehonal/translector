@@ -8,7 +8,7 @@ import {
     server
 } from "./server";
 
-const sequelize = seqHelpers.connFactory("@root/conf/database");
+const sequelize = seqHelpers.connFactory(path.join(__dirname, "../../conf/database"));
 
 /** @type {Sequelize.Model[]} */
 const models = seqAutoImport(sequelize, path.join(__dirname, "./entities"));

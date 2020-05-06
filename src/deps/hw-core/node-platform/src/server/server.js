@@ -1,22 +1,3 @@
-/*
- *
- * NODE INTERNALS
- *
- */
-import {
-    execSync
-} from 'child_process';
-
-import path from "path"
-
-/*
- *
- * INSTALLED MODULES
- *
- */
-
-import Sequelize from "sequelize"
-
 /**
  * @typedef {Object} DBObj
  * @property modules
