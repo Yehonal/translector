@@ -4,13 +4,13 @@
   "description": "A powerful utility for Translators",
   "version": "1.2.8",
   "private": true,
-  "author": "hyperweb2",
+  "author": "Yehonal",
   "homepage": ".",
-  "license": "MIT",
+  "license": "AGPL3",
   "main": "src/main/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Yehonal/get-translector"
+    "url": "https://github.com/Yehonal/get-translector.git"
   },
   "dependencies": {
     "electron-settings": "^3.2.0",
