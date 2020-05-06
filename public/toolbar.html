@@ -9,13 +9,16 @@
 
         var settings = require('electron-settings');
 
-        var langOptions = settings.get("currentLangs") || { src: "en", dst: "it" };
-        var enabledServices = settings.get("enabledServices") || {
+        // svc ID : is enabled by default
+        var svcList = {
             GOOGLE: true,
             DEEPL: true,
             TLDICTIONARY: true,
             WORDREF: false
-        };
+        }
+
+        var langOptions = settings.get("currentLangs") || { src: "en", dst: "it" };
+        var enabledServices = settings.get("enabledServices") || svcList
     </script>
 </head>
 
@@ -95,10 +98,9 @@
             svc.checked = window.enabledServices[id]
         }
 
-        checkService("GOOGLE")
-        checkService("DEEPL")
-        checkService("WORDREF")
-        checkService("TLDICTIONARY")
+        Object.keys(window.svcList).map((v) => {
+            checkService(v)
+        })
 
         function setService(id, event) {
             let enabled = event.target.checked;
