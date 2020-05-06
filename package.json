@@ -46,9 +46,8 @@
     "prestart": "node ./apps/installer/installer.js",
     "predeploy": "npm run build:ssg",
     "deploy": "gh-pages -d build",
-    "dist:win64": "npm run package:win64 && electron-builder --win --x64 --prepackaged=dist/package/Translector-win32-x64",
-    "package:win64": "electron-packager . Translector --overwrite --out=dist/package --platform=win32 --arch=x64 --icon=build/icon.ico --asar",
-    "postinstall": "electron-rebuild"
+    "dist": "electron-builder build",
+    "postinstall": "electron-builder install-app-deps"
   },
   "build": {
     "appId": "com.translector.app",
